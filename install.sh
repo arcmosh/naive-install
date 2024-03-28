@@ -34,7 +34,7 @@ cat > /etc/caddy/Caddyfile <<-EOF
     hide_via
     probe_resistance
   }
-  respond "OK" 200
+  respond "200" 200
 }
 EOF
 
