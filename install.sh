@@ -26,6 +26,9 @@ rm -rf caddy-forwardproxy-naive*
 # config Caddyfile
 mkdir -p /etc/caddy
 cat > /etc/caddy/Caddyfile <<-EOF
+{
+  order forward_proxy before respond
+}
 :443, ${domain} {
   tls me@${domain}
   forward_proxy {
