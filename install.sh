@@ -30,7 +30,7 @@ cat > /etc/caddy/Caddyfile <<-EOF
   order forward_proxy before respond
 }
 :443, ${domain} {
-  tls me@${domain}
+  tls admin@${domain}
   forward_proxy {
     basic_auth $UUID $UUID
     hide_ip
