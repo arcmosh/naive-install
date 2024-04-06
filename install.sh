@@ -1,14 +1,20 @@
 #!/bin/bash
 
-until [ -n "$domain" ]
-do
-	read -p "Enter your domain: " domain
-done
 IPV4=$(wget -qO- ipv4.ip.sb)
 IPV6=$(wget -qO- ipv6.ip.sb)
-echo "请确认你已经设置好域名解析 指向 $IPV4 或$IPV6 "
 
-read -p "按下回车键继续..."
+until [ -n "$domain" ]
+do
+	echo "No domain? enter 'auto'"
+	read -p "Enter your domain: " domain
+done
+
+if [ "$domain" = "auto" ]; then
+	domain="$IPV4.sslip.io"
+else
+	echo "请确认你已经设置好域名解析 指向 $IPV4 或$IPV6 "
+	read -p "按下回车键继续..."
+fi
 
 export UUID=${UUID:-$(cat /proc/sys/kernel/random/uuid)}
 
@@ -30,7 +36,9 @@ cat > /etc/caddy/Caddyfile <<-EOF
   order forward_proxy before respond
 }
 :443, ${domain} {
-  tls admin@${domain}
+  tls admin@${domain} {
+  	ca https://acme.zerossl.com/v2/DV90
+  }
   forward_proxy {
     basic_auth $UUID $UUID
     hide_ip
