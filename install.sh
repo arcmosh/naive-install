@@ -10,7 +10,7 @@ do
 done
 
 if [ "$domain" = "auto" ]; then
-	domain="$(echo $IPV4 | sed 's/./-/g').sslip.io"
+	domain="$(echo $IPV4 | sed 's/\./-/g').sslip.io"
 else
 	echo "请确认你已经设置好域名解析 指向 $IPV4 或$IPV6 "
 	read -p "按下回车键继续..."
