@@ -49,7 +49,7 @@ cat > /etc/caddy/Caddyfile <<-EOF
 }
 EOF
 
-systemctl start caddy
+systemctl restart caddy
 systemctl enable caddy
 
 echo "-----------------------------"
